@@ -37,7 +37,6 @@ function prHook( event ) {
 	var repo = new Repo( event.repo );
 
 	repo.auditPr({
-		repo: event.repo,
 		pr: event.payload.number,
 		signatures: signatures
 	}, function( error, data ) {
