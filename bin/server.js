@@ -34,15 +34,15 @@ function prHook( event ) {
 		return;
 	}
 
-	var repo = new Repo( event.repo ),
-		head = event.payload.pull_request.head.sha;
+	var repo = new Repo( event.repo );
 
 	repo.auditPr({
-		pr: event.payload.number,
+		pr: event.pr,
+		range: event.range,
 		signatures: signatures
 	}, function( error, data ) {
 		var status = {
-			sha: head
+			sha: event.head
 		};
 
 		if ( error ) {
