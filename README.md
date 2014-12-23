@@ -36,10 +36,13 @@ The main export of this module is a function which audits a single branch from a
     * `neglectedCommits` (Array): An array of all commits that aren't licensed.
     * `neglectedAuthors` (Array): An array of all authors that haven't signed a license agreement. Each author object contains `email` and `commits` properties, with the `commits` property containing an array of SHAs.
 
-This module also exposes a binary named `jquery-audit` which can just passes its arguments on to the main export for auditing a branch. The usage is as follows:
+This module also exposes a binary named `jquery-audit-branch` which just passes its arguments on to the main export for auditing a branch. The usage is as follows:
 
 ```sh
-jquery-audit <repo> <branch>
+jquery-audit-branch <repo> <branch>
+
+# or
+./bin/audit-branch.js <repo> <branch>
 ```
 
 
@@ -47,6 +50,15 @@ jquery-audit <repo> <branch>
 ## PR Auditing
 
 The webhook server can be run via `npm start` and will listen to pull request hooks for all repositories. The webhook will set the commit status based on the results of the audit. On every PR synchronization, all commits in the PR are checked.
+
+This module also exposes a binary named `jquery-audit-pr` which performs a manual audit of a PR. The usage is as follows:
+
+```sh
+jquery-audit-pr <repo> <pr>
+
+# or
+./bin/audit-pr.js <repo> <pr>
+```
 
 
 

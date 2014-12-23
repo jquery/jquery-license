@@ -7,7 +7,7 @@ var repo, branch,
 repo = process.argv[ 2 ];
 if ( !repo ) {
 	console.error( "Missing repo name." );
-	console.error( "Usage: jquery-audit <repo> <branch>" );
+	console.error( "Usage: jquery-audit-branch <repo> <branch>" );
 	process.exit( 1 );
 }
 
@@ -19,7 +19,7 @@ if ( !branch ) {
 
 
 // Audit the repository
-console.log( "Auditing " + branch + " branch of " + repo + ".\n" );
+console.log( "Auditing " + branch + " branch of " + repo + "...\n" );
 audit({
 	repo: repo,
 	branch: branch

@@ -19,7 +19,8 @@
     "start": "./bin/server.js"
   },
   "bin": {
-    "jquery-audit": "./bin/audit.js"
+    "jquery-audit-branch": "./bin/audit.js",
+    "jquery-audit-pr": "./bin/audit-pr.js"
   },
   "dependencies": {
     "git-notifier": "2.0.0",
