@@ -1,0 +1,30 @@
+{
+  "name": "jquery-license",
+  "version": "0.0.0",
+  "description": "License verification for jQuery Foundation projects",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jquery/jquery-license.git"
+  },
+  "author": {
+    "name": "jQuery Foundation and other contributors"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/jquery/jquery-license/blob/master/LICENSE.txt"
+    }
+  ],
+  "scripts": {
+    "start": "./bin/server.js"
+  },
+  "bin": {
+    "jquery-audit": "./bin/audit.js"
+  },
+  "dependencies": {
+    "git-notifier": "2.0.0",
+    "github-request": "1.2.1",
+    "mkdirp": "0.5.0",
+    "sane-email-validation": "1.0.0"
+  }
+}
