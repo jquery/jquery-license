@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
-var repoName, pr,
-	Repo = require( "../lib/repo" ),
+var repo, pr,
+	auditPr = require( "../lib/pr" ).audit,
 	getSignatures = require( "../lib/signatures" ).hashed;
 
 // Parse command line arguments
-repoName = process.argv[ 2 ];
+repo = process.argv[ 2 ];
 pr = process.argv[ 3 ];
-if ( !repoName || !pr) {
+if ( !repo || !pr) {
 	console.error( "Missing repo name or PR #." );
 	console.error( "Usage: jquery-audit-pr <repo> <pr>" );
 	process.exit( 1 );
@@ -21,37 +21,18 @@ getSignatures(function( error, signatures ) {
 		process.exit( 1 );
 	}
 
-	console.log( "Auditing PR #" + pr + " for " + repoName + "...\n" );
-	var repo = new Repo( repoName );
-	repo.auditPr({
+	console.log( "Auditing PR #" + pr + " for " + repo + "...\n" );
+	auditPr({
+		repo: repo,
 		pr: pr,
 		signatures: signatures
-	}, function( error, data ) {
+	}, function( error, status ) {
 		if ( error ) {
-			console.log( "Error auditing PR." );
-			console.log( error );
+			console.error( "Error auditing PR." );
+			console.error( error );
 			return;
 		}
 
-		var status = {
-			sha: data.commits[ 0 ].hash
-		};
-
-		if ( error ) {
-			status.state = "error";
-		} else if ( data.neglectedAuthors.length ) {
-			status.state = "failure";
-		} else {
-			status.state = "success";
-		}
-
 		console.log( status );
-
-		repo.setStatus( status, function( error ) {
-			if ( error ) {
-				console.error( "Error setting status:" );
-				console.error( error );
-			}
-		});
 	});
 });

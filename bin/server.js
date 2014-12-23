@@ -3,7 +3,7 @@
 var signatures,
 	http = require( "http" ),
 	Notifier = require( "git-notifier" ).Notifier,
-	Repo = require( "../lib/repo" ),
+	auditPr = require( "../lib/pr" ).audit,
 	getSignatures = require( "../lib/signatures" ).hashed,
 	config = require( "../lib/config" );
 
@@ -34,31 +34,15 @@ function prHook( event ) {
 		return;
 	}
 
-	var repo = new Repo( event.repo );
-
-	repo.auditPr({
+	auditPr({
+		repo: event.repo,
 		pr: event.pr,
-		range: event.range,
+		base: event.base,
+		head: event.head,
 		signatures: signatures
-	}, function( error, data ) {
-		var status = {
-			sha: event.head
-		};
+	}, function() {
 
-		if ( error ) {
-			status.state = "error";
-		} else if ( data.neglectedAuthors.length ) {
-			status.state = "failure";
-		} else {
-			status.state = "success";
-		}
-
-		repo.setStatus( status, function( error ) {
-			if ( error ) {
-				console.error( "Error setting status:" );
-				console.error( error );
-			}
-		});
+		// Nothing to do here, even if there's an error
 	});
 }
 
