@@ -23,31 +23,31 @@ console.log( "Auditing " + branch + " branch of " + repo + "...\n" );
 audit({
 	repo: repo,
 	branch: branch
-}, function( error, data ) {
-	if ( error ) {
+})
+	.then(function( data ) {
+
+		// Display all authors who haven't granted a license
+		if ( data.neglectedAuthors.length ) {
+			console.log( "The following authors have not signed the CLA:" );
+			data.neglectedAuthors.forEach(function( author ) {
+				var description,
+					commitCount = author.commits.length;
+
+				description = commitCount + " commit";
+				if ( commitCount > 1 ) {
+					description += "s";
+				}
+				console.log( author.email + " (" + description + ")" );
+			});
+		}
+
+		// Display summary
+		console.log();
+		console.log( "Total commits:", data.commits.length );
+		console.log( "Unsigned commits:", data.neglectedCommits.length );
+		console.log( "Unsigned authors:", data.neglectedAuthors.length );
+	})
+	.catch(function( error ) {
 		console.error( "Error auditing " + repo );
 		console.error( error.stack );
-		return;
-	}
-
-	// Display all authors who haven't granted a license
-	if ( data.neglectedAuthors.length ) {
-		console.log( "The following authors have not signed the CLA:" );
-		data.neglectedAuthors.forEach(function( author ) {
-			var description,
-				commitCount = author.commits.length;
-
-			description = commitCount + " commit";
-			if ( commitCount > 1 ) {
-				description += "s";
-			}
-			console.log( author.email + " (" + description + ")" );
-		});
-	}
-
-	// Display summary
-	console.log();
-	console.log( "Total commits:", data.commits.length );
-	console.log( "Unsigned commits:", data.neglectedCommits.length );
-	console.log( "Unsigned authors:", data.neglectedAuthors.length );
-});
+	});

@@ -1,63 +1,72 @@
 #!/usr/bin/env node
 
-var signatures,
+var getSignatures,
 	http = require( "http" ),
 	Notifier = require( "git-notifier" ).Notifier,
+	Repo = require( "../lib/repo" ),
 	auditPr = require( "../lib/pr" ).audit,
-	getSignatures = require( "../lib/signatures" ).hashed,
+	getHashedSignatures = require( "../lib/signatures" ).hashed,
 	config = require( "../lib/config" );
 
-console.log( "Loading CLA & CAA signatures..." );
-getSignatures(function( error, _signatures ) {
-	if ( error ) {
-		console.error( "Error getting CLA & CAA signatures." );
-		throw error;
-	}
+var server = http.createServer(),
+	notifier = new Notifier();
 
-	var server = http.createServer(),
-		notifier = new Notifier();
+// Create the notifier
+server.on( "request", notifier.handler );
+server.listen( config.port );
+notifier.on( config.owner + "/*/pull_request", prHook );
 
-	// Repeatedly get new signatures
-	signatures = _signatures;
-	setTimeout( updateSignatures, config.signatureRefresh );
-
-	// Create the notifier
-	server.on( "request", notifier.handler );
-	server.listen( config.port );
-	notifier.on( config.owner + "/*/pull_request", prHook );
-
-	console.log( "Listening on port " + config.port + "." );
-});
+console.log( "Listening on port " + config.port + "." );
 
 function prHook( event ) {
 	if ( event.payload.action !== "opened" && event.payload.action !== "synchronize" ) {
 		return;
 	}
 
-	auditPr({
-		repo: event.repo,
-		pr: event.pr,
-		base: event.base,
-		head: event.head,
-		signatures: signatures
-	}, function() {
+	getSignatures().then(
+		function( signatures ) {
 
-		// Nothing to do here, even if there's an error
-	});
-}
+			// Nothing to do afterward, even if there's an error
+			auditPr({
+				repo: event.repo,
+				pr: event.pr,
+				base: event.base,
+				head: event.head,
+				signatures: signatures
+			});
+		},
 
-// Fetch new CLA signatures every minute
-function updateSignatures() {
-	getSignatures(function( error, _signatures ) {
-		if ( error ) {
-
-			console.error( "Error updating signatures." );
-			// Ignore an error at this point, since we already have older signatures
-			return;
+		// If we can't get the signatures, set the status to error
+		function() {
+			var repo = new Repo( event.repo );
+			repo.setStatus({
+				sha: event.head,
+				state: "error"
+			});
 		}
-
-		signatures = _signatures;
-	});
-
-	setTimeout( updateSignatures, config.signatureRefresh );
+	);
 }
+
+// Fetch new CLA signatures periodically
+getSignatures = (function() {
+	var promise = getHashedSignatures();
+
+	function updateSignatures() {
+		var updatedPromise = getHashedSignatures();
+
+		updatedPromise
+			.then(function() {
+				promise = updatedPromise;
+			})
+			.catch(function() {
+				console.error( "Error updating signatures." );
+			})
+			.then(function() {
+				setTimeout( updateSignatures, config.signatureRefresh );
+			});
+	}
+
+	return function() {
+		return promise;
+	};
+})();

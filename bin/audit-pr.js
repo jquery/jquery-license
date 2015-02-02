@@ -14,25 +14,20 @@ if ( !repo || !pr) {
 }
 
 console.log( "Loading CLA & CAA signatures..." );
-getSignatures(function( error, signatures ) {
-	if ( error ) {
-		console.error( "Error getting CLA & CAA signatures." );
-		console.error( error );
-		process.exit( 1 );
-	}
-
-	console.log( "Auditing PR #" + pr + " for " + repo + "...\n" );
-	auditPr({
-		repo: repo,
-		pr: pr,
-		signatures: signatures
-	}, function( error, status ) {
-		if ( error ) {
-			console.error( "Error auditing PR." );
-			console.error( error );
-			return;
-		}
-
+getSignatures()
+	.then(function( signatures ) {
+		console.log( "Auditing PR #" + pr + " for " + repo + "...\n" );
+		return auditPr({
+			repo: repo,
+			pr: pr,
+			signatures: signatures
+		});
+	})
+	.then(function( status ) {
 		console.log( status );
+	})
+	.catch(function( error ) {
+		console.error( "Error auditing PR." );
+		console.error( error.stack );
+		process.exit( 1 );
 	});
-});
