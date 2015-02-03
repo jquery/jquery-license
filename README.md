@@ -26,11 +26,11 @@ The following properties only apply when running the webhook:
 
 The main export of this module is a function which audits a single branch from a single repository. The signature is as follows:
 
-`function( options, callback )`
+`function( options )`
 * `options` (Object): Settings for the audit.
   * `repo` (String): The name of the repository to audit.
   * `branch` (String; default: `"master"`): The name of the branch to audit.
-* `callback: (`function( error, data )`): Callback to invoke when the audit is complete.
+* Returns `Promise`
   * `data`: Object containing audit information.
     * `commits` (Array): An array of all commits that were audited. Each commit object contains `hash`, `name`, and `email` properties.
     * `neglectedCommits` (Array): An array of all commits that aren't licensed.
