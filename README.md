@@ -11,6 +11,8 @@ The Auditing scripts require some configuration. Create a `config.json` in the r
 * `owner` (default: `"jquery"`): Which GitHub user/organization to audit.
   * This only exists for development purposes so that the value can be set to a personal account for testing.
 * `repoDir` (default: `"repos"`): Which directory to clone repositories into.
+* `outputDir` (default: `"output"`): Which directory to store PR results into.
+  * Results for all PR checks are stored, whether run through the web hook or through the `jquery-audit-pr` binary.
 
 ### Webhook config
 
