@@ -16,6 +16,9 @@ var server = http.createServer(),
 server.on( "request", notifier.handler );
 server.listen( config.port );
 notifier.on( config.owner + "/*/pull_request", prHook );
+notifier.on( "error", function( error ) {
+	debug( "invalid hook request", error );
+});
 
 debug( "listening on port " + config.port );
 
