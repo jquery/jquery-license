@@ -24,6 +24,21 @@ The following properties only apply when running the webhook:
 
 
 
+## Debugging
+
+The [debug](https://www.npmjs.org/package/debug) module is used for debug messages. To enable all debugging, run any script with `DEBUG=*`. You may want to exclude the GitHub requests since they're large and noisy; to do so use `DEBUG=*,-github:*`.
+
+The following debug names are used:
+
+* `config`: Prints out the config values that are being used.
+* `signatures`: Prints out messages from the signatures module.
+* `repo:{repo-name}`: Prints out messages from the repo module.
+* `github:{request-id}`: Prints out all requests through the GitHub API. The request ID allows you to correlate requests and responses.
+* `audit:{repo}-{pr}`: Prints out messages from the PR audit module.
+* `server`: Prints out messages from the web hook server.
+
+
+
 ## Branch Auditing
 
 The main export of this module is a function which audits a single branch from a single repository. The signature is as follows:

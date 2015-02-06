@@ -13,10 +13,8 @@ if ( !repo || !pr) {
 	process.exit( 1 );
 }
 
-console.log( "Loading CLA & CAA signatures..." );
 getSignatures()
 	.then(function( signatures ) {
-		console.log( "Auditing PR #" + pr + " for " + repo + "...\n" );
 		return auditPr({
 			repo: repo,
 			pr: pr,

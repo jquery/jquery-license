@@ -24,6 +24,7 @@
     "jquery-audit-pr": "./bin/audit-pr.js"
   },
   "dependencies": {
+    "debug": "2.1.1",
     "es6-promise": "2.0.1",
     "git-notifier": "2.1.0",
     "github-request": "1.2.1",

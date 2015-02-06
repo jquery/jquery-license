@@ -3,6 +3,7 @@
 var getSignatures,
 	http = require( "http" ),
 	Notifier = require( "git-notifier" ).Notifier,
+	debug = require( "debug" )( "server" ),
 	Repo = require( "../lib/repo" ),
 	auditPr = require( "../lib/pr" ).audit,
 	getHashedSignatures = require( "../lib/signatures" ).hashed,
@@ -16,13 +17,14 @@ server.on( "request", notifier.handler );
 server.listen( config.port );
 notifier.on( config.owner + "/*/pull_request", prHook );
 
-console.log( "Listening on port " + config.port + "." );
+debug( "listening on port " + config.port );
 
 function prHook( event ) {
 	if ( event.payload.action !== "opened" && event.payload.action !== "synchronize" ) {
 		return;
 	}
 
+	debug( "processing hook", event.repo, event.pr );
 	getSignatures().then(
 		function( signatures ) {
 
@@ -54,12 +56,14 @@ getSignatures = (function() {
 	function updateSignatures() {
 		var updatedPromise = getHashedSignatures();
 
+		debug( "updating signatures" );
 		updatedPromise
 			.then(function() {
+				debug( "successfully updated signatures" );
 				promise = updatedPromise;
 			})
-			.catch(function() {
-				console.error( "Error updating signatures." );
+			.catch(function( error ) {
+				debug( "error updating signatures", error );
 			})
 			.then(function() {
 				setTimeout( updateSignatures, config.signatureRefresh );
