@@ -58,7 +58,8 @@ function prHook( event ) {
 			var repo = new Repo( event.repo );
 			repo.setStatus({
 				sha: event.head,
-				state: "error"
+				state: "error",
+				description: "There was an error checking the CLA status"
 			})
 				.catch(function( error ) {
 					logger.error( "Error setting status", {
