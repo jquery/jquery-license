@@ -23,6 +23,10 @@ getSignatures()
 	})
 	.then(function( status ) {
 		console.log( status );
+
+		if ( status.auditError ) {
+			console.error( status.auditError.stack );
+		}
 	})
 	.catch(function( error ) {
 		console.error( "Error auditing PR." );

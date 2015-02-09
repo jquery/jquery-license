@@ -3,6 +3,7 @@
 var getSignatures,
 	http = require( "http" ),
 	Notifier = require( "git-notifier" ).Notifier,
+	logger = require( "simple-log" ).init( "jquery-license" ),
 	debug = require( "debug" )( "server" ),
 	Repo = require( "../lib/repo" ),
 	auditPr = require( "../lib/pr" ).audit,
@@ -30,15 +31,26 @@ function prHook( event ) {
 	debug( "processing hook", event.repo, event.pr );
 	getSignatures().then(
 		function( signatures ) {
-
-			// Nothing to do afterward, even if there's an error
 			auditPr({
 				repo: event.repo,
 				pr: event.pr,
 				base: event.base,
 				head: event.head,
 				signatures: signatures
-			});
+			})
+				.then(function( status ) {
+					if ( status.auditError ) {
+						throw status.auditError;
+					}
+				})
+				.catch(function( error ) {
+					logger.error( "Error auditing hook", {
+						repo: event.repo,
+						pr: event.pr,
+						head: event.head,
+						error: error.stack
+					});
+				});
 		},
 
 		// If we can't get the signatures, set the status to error
@@ -47,7 +59,15 @@ function prHook( event ) {
 			repo.setStatus({
 				sha: event.head,
 				state: "error"
-			});
+			})
+				.catch(function( error ) {
+					logger.error( "Error setting status", {
+						repo: event.repo,
+						pr: event.pr,
+						head: event.head,
+						error: error.stack
+					});
+				});
 		}
 	);
 }
@@ -66,6 +86,7 @@ getSignatures = (function() {
 				promise = updatedPromise;
 			})
 			.catch(function( error ) {
+				logger.error( "Error getting signatures", error.stack );
 				debug( "error updating signatures", error );
 			})
 			.then(function() {
