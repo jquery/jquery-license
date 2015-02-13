@@ -3,6 +3,21 @@ var fs = require( "fs" ),
 	config = require( "../lib/config" ),
 	Repo = require ( "../lib/repo" );
 
+exports.get = {
+	"returns singleton": function( test ) {
+		test.expect( 3 );
+
+		var instance1 = Repo.get( "test-repo" ),
+			instance2 = Repo.get( "test-repo" ),
+			instance3 = Repo.get( "test-repo-2" );
+
+		test.equal( instance1.name, "test-repo", "Instance #1 has correct repo name" );
+		test.equal( instance3.name, "test-repo-2", "Instance #3 has correct repo name" );
+		test.strictEqual( instance1, instance2, "Returns same instance per repo" );
+		test.done();
+	}
+};
+
 exports.fetch = {
 	setUp: function( done ) {
 		this.repo = new Repo( "test-repo" );
