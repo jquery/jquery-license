@@ -55,7 +55,7 @@ function prHook( event ) {
 
 		// If we can't get the signatures, set the status to error
 		function() {
-			var repo = new Repo( event.repo );
+			var repo = Repo.get( event.repo );
 			repo.setStatus({
 				sha: event.head,
 				state: "error",

@@ -4,7 +4,7 @@ var Repo = require( "./lib/repo" ),
 
 module.exports = function( options ) {
 	return getSignatures().then(function( signatures ) {
-		var repo = new Repo( options.repo );
+		var repo = Repo.get( options.repo );
 		return repo.auditBranch({
 			branch: options.branch || "master",
 			signatures: signatures,
