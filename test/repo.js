@@ -24,10 +24,146 @@ exports.fetch = {
 		done();
 	},
 
-	"repo does not exist": function( test ) {
-		test.expect( 4 );
+	"clone and fetch succeed": function( test ) {
+		test.expect( 3 );
 
 		var providedRef = "my-ref";
+
+		this.repo.clone = function() {
+			test.ok( true, "Should clone repo" );
+			return Promise.resolve();
+		};
+
+		this.repo._fetch = function( ref ) {
+			test.equal( ref, providedRef, "Should fetch expected ref" );
+			return Promise.resolve();
+		};
+
+		this.repo.fetch( providedRef ).then(function() {
+			test.ok( "Fetch should resolve" );
+			test.done();
+		});
+	},
+
+	"clone errors": function( test ) {
+		test.expect( 2 );
+
+		var providedRef = "my-ref",
+			providedError = new Error();
+
+		this.repo.clone = function() {
+			test.ok( true, "Should clone" );
+			return Promise.reject( providedError );
+		};
+
+		this.repo._fetch = function() {
+			test.ok( false, "Should not fetch on error" );
+		};
+
+		this.repo.fetch( providedRef ).catch(function( error ) {
+			test.strictEqual( error, providedError, "Should pass along error" );
+			test.done();
+		});
+	},
+
+	"fetch errors": function( test ) {
+		test.expect( 3 );
+
+		var providedRef = "my-ref",
+			providedError = new Error();
+
+		this.repo.clone = function() {
+			test.ok( true, "Should clone" );
+			return Promise.resolve();
+		};
+
+		this.repo._fetch = function( ref ) {
+			test.equal( ref, providedRef, "Should fetch expected ref" );
+			return Promise.reject( providedError );
+		};
+
+		this.repo.fetch( providedRef ).catch(function( error ) {
+			test.strictEqual( error, providedError, "Should pass along error" );
+			test.done();
+		});
+	},
+
+	"fetch succeeds after previous clone succeeds": function( test ) {
+		test.expect( 2 );
+
+		var providedRef = "my-ref";
+
+		this.repo.hasCloned = Promise.resolve();
+
+		this.repo.clone = function() {
+			test.ok( false, "Should not repeat clone" );
+		};
+
+		this.repo._fetch = function( ref ) {
+			test.equal( ref, providedRef, "Should fetch expected ref" );
+			return Promise.resolve();
+		};
+
+		this.repo.fetch( providedRef ).then(function() {
+			test.ok( "Fetch should resolve" );
+			test.done();
+		});
+	},
+
+	"fetch errors after previous clone succeeds": function( test ) {
+		test.expect( 2 );
+
+		var providedRef = "my-ref",
+			providedError = new Error();
+
+		this.repo.hasCloned = Promise.resolve();
+
+		this.repo.clone = function() {
+			test.ok( false, "Should not repeat clone" );
+		};
+
+		this.repo._fetch = function( ref ) {
+			test.equal( ref, providedRef, "Should fetch expected ref" );
+			return Promise.reject( providedError );
+		};
+
+		this.repo.fetch( providedRef ).catch(function( error ) {
+			test.strictEqual( error, providedError, "Should pass along error" );
+			test.done();
+		});
+	},
+
+	"fetch after previous clone failed": function( test ) {
+		test.expect( 1 );
+
+		var providedRef = "my-ref",
+			providedError = new Error();
+
+		this.repo.hasCloned = Promise.reject( providedError );
+
+		this.repo.clone = function() {
+			test.ok( false, "Should not repeat clone" );
+		};
+
+		this.repo._fetch = function() {
+			test.ok( false, "Should not fetch after clone error" );
+		};
+
+		this.repo.fetch( providedRef ).catch(function( error ) {
+			test.strictEqual( error, providedError, "Should pass along error" );
+			test.done();
+		});
+	}
+};
+
+exports.clone = {
+	setUp: function( done ) {
+		this.repo = new Repo( "test-repo" );
+		done();
+	},
+
+	"repo does not exist": function( test ) {
+		test.expect( 3 );
 
 		this.repo.exists = function() {
 			test.ok( true, "Should check if repo exists" );
@@ -39,21 +175,14 @@ exports.fetch = {
 			return Promise.resolve();
 		};
 
-		this.repo._fetch = function( ref ) {
-			test.equal( ref, providedRef, "Should fetch expected ref" );
-			return Promise.resolve();
-		};
-
-		this.repo.fetch( providedRef ).then(function() {
-			test.ok( true, "Fetch should resolve" );
+		this.repo.clone().then(function() {
+			test.ok( true, "Clone should resolve" );
 			test.done();
 		});
 	},
 
 	"repo exists": function( test ) {
-		test.expect( 3 );
-
-		var providedRef = "my-ref";
+		test.expect( 2 );
 
 		this.repo.exists = function() {
 			test.ok( true, "Should check if repo exists" );
@@ -64,13 +193,8 @@ exports.fetch = {
 			test.ok( false, "Should not clone existing repo" );
 		};
 
-		this.repo._fetch = function( ref ) {
-			test.equal( ref, providedRef, "Should fetch expected ref" );
-			return Promise.resolve();
-		};
-
-		this.repo.fetch( providedRef ).then(function() {
-			test.ok( true, "Fetch should resolve" );
+		this.repo.clone().then(function() {
+			test.ok( true, "Clone should resolve" );
 			test.done();
 		});
 	},
@@ -78,8 +202,7 @@ exports.fetch = {
 	"error in exists": function( test ) {
 		test.expect( 2 );
 
-		var providedRef = "my-ref",
-			providedError = new Error();
+		var providedError = new Error();
 
 		this.repo.exists = function() {
 			test.ok( true, "Should check if repo exists" );
@@ -90,21 +213,16 @@ exports.fetch = {
 			test.ok( false, "Should not clone on error" );
 		};
 
-		this.repo._fetch = function() {
-			test.ok( false, "Should not fetch on error" );
-		};
-
-		this.repo.fetch( providedRef ).catch(function( error ) {
+		this.repo.clone().catch(function( error ) {
 			test.strictEqual( error, providedError, "Should pass along error" );
 			test.done();
 		});
 	},
 
-	"error in clone": function( test ) {
+	"error in _clone": function( test ) {
 		test.expect( 3 );
 
-		var providedRef = "my-ref",
-			providedError = new Error();
+		var providedError = new Error();
 
 		this.repo.exists = function() {
 			test.ok( true, "Should check if repo exists" );
@@ -116,38 +234,7 @@ exports.fetch = {
 			return Promise.reject( providedError );
 		};
 
-		this.repo._fetch = function() {
-			test.ok( false, "Should not fetch on error" );
-		};
-
-		this.repo.fetch( providedRef ).catch(function( error ) {
-			test.strictEqual( error, providedError, "Should pass along error" );
-			test.done();
-		});
-	},
-
-	"error in fetch": function( test ) {
-		test.expect( 4 );
-
-		var providedRef = "my-ref",
-			providedError = new Error();
-
-		this.repo.exists = function() {
-			test.ok( true, "Should check if repo exists" );
-			return Promise.resolve( false );
-		};
-
-		this.repo._clone = function() {
-			test.ok( true, "Should clone new repo" );
-			return Promise.resolve();
-		};
-
-		this.repo._fetch = function( ref ) {
-			test.equal( ref, providedRef, "Should fetch expected ref" );
-			return Promise.reject( providedError );
-		};
-
-		this.repo.fetch( providedRef ).catch(function( error ) {
+		this.repo.clone().catch(function( error ) {
 			test.strictEqual( error, providedError, "Should pass along error" );
 			test.done();
 		});
