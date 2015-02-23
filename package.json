@@ -1,6 +1,6 @@
 {
   "name": "jquery-license",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "License verification for jQuery Foundation projects",
   "repository": {
     "type": "git",
