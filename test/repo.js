@@ -397,6 +397,7 @@ exports.auditPr = {
 		this.repo = new Repo( "my-test" );
 		this.options = {
 			pr: 37,
+			baseBranch: "my-base-branch",
 			base: "my-base",
 			head: "my-head",
 			signatures: {},
@@ -408,11 +409,16 @@ exports.auditPr = {
 	},
 
 	"success": function( test ) {
-		test.expect( 5 );
+		test.expect( 6 );
 
 		var providedOptions = this.options,
 			providedCommittish = this.committish;
 			providedResult = this.result;
+
+		this.repo.fetchBranch = function( branch ) {
+			test.equal( branch, providedOptions.baseBranch, "Should fetch base branch" );
+			return Promise.resolve();
+		};
 
 		this.repo.fetchPr = function( pr ) {
 			test.equal( pr, providedOptions.pr, "Should fetch PR" );
@@ -435,11 +441,42 @@ exports.auditPr = {
 		});
 	},
 
-	"error in fetch": function( test ) {
-		test.expect( 2 );
+	"error in fetchBranch": function( test ) {
+		test.expect( 3 );
 
 		var providedOptions = this.options,
 			providedError = new Error();
+
+		this.repo.fetchBranch = function( branch ) {
+			test.equal( branch, providedOptions.baseBranch, "Should fetch base branch" );
+			return Promise.reject( providedError );
+		};
+
+		this.repo.fetchPr = function( pr ) {
+			test.equal( pr, providedOptions.pr, "Should fetch PR" );
+			return Promise.resolve();
+		};
+
+		this.repo.audit = function() {
+			test.ok( false, "Should not audit on error" );
+		};
+
+		this.repo.auditPr( providedOptions ).catch(function( error ) {
+			test.strictEqual( error, providedError, "Should pass along error" );
+			test.done();
+		});
+	},
+
+	"error in fetchPr": function( test ) {
+		test.expect( 3 );
+
+		var providedOptions = this.options,
+			providedError = new Error();
+
+		this.repo.fetchBranch = function( branch ) {
+			test.equal( branch, providedOptions.baseBranch, "Should fetch base branch" );
+			return Promise.resolve();
+		};
 
 		this.repo.fetchPr = function( pr ) {
 			test.equal( pr, providedOptions.pr, "Should fetch PR" );
@@ -457,10 +494,15 @@ exports.auditPr = {
 	},
 
 	"error in audit": function( test ) {
-		test.expect( 2 );
+		test.expect( 3 );
 
 		var providedOptions = this.options,
 			providedError = new Error();
+
+		this.repo.fetchBranch = function( branch ) {
+			test.equal( branch, providedOptions.baseBranch, "Should fetch base branch" );
+			return Promise.resolve();
+		};
 
 		this.repo.fetchPr = function( pr ) {
 			test.equal( pr, providedOptions.pr, "Should fetch PR" );
