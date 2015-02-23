@@ -2,8 +2,6 @@
 
 This module audits jQuery Foundation repositories to ensure that all commits have appropriate licensing either via the [CLA](http://contribute.jquery.org/CLA/) or the CAA. This can be run either as a full audit against a given branch of a repository or as a webhook to verify all commits within a pull request.
 
-
-
 ## Config
 
 The Auditing scripts require some configuration. Create a `config.json` in the root of this module with the following properties:
