@@ -95,6 +95,8 @@ getSignatures = (function() {
 			});
 	}
 
+	setTimeout( updateSignatures, config.signatureRefresh );
+
 	return function() {
 		return promise;
 	};
