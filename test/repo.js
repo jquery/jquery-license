@@ -1,7 +1,8 @@
 var fs = require( "fs" ),
 	Promise = require( "es6-promise" ).Promise,
 	config = require( "../lib/config" ),
-	Repo = require ( "../lib/repo" );
+	Repo = require ( "../lib/repo" ),
+	util = require( "../lib/util" );
 
 exports.get = {
 	"returns singleton": function( test ) {
@@ -21,6 +22,18 @@ exports.get = {
 exports.fetch = {
 	setUp: function( done ) {
 		this.repo = new Repo( "test-repo" );
+
+		this.retry = util.retry;
+		util.retry = function( method ) {
+			return method();
+		};
+
+		done();
+	},
+
+	tearDown: function( done ) {
+		util.retry = this.retry;
+
 		done();
 	},
 
