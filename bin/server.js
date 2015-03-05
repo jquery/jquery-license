@@ -34,7 +34,11 @@ function prHook( event ) {
 			auditPr({
 				repo: event.repo,
 				pr: event.pr,
+				baseRemote: event.payload.pull_request.base.git_url,
+				baseBranch: event.payload.pull_request.base.ref,
 				base: event.base,
+				headRemote: event.payload.pull_request.head.git_url,
+				headBranch: event.payload.pull_request.head.ref,
 				head: event.head,
 				signatures: signatures
 			})
