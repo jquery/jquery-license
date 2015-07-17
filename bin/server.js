@@ -11,7 +11,8 @@ var getSignatures,
 	config = require( "../lib/config" );
 
 var server = http.createServer(),
-	notifier = new Notifier();
+	notifier = new Notifier(),
+	failedEvents = [];
 
 // Create the notifier
 server.on( "request", notifier.handler );
@@ -19,7 +20,7 @@ server.listen( config.port );
 notifier.on( config.owner + "/*/pull_request", prHook );
 notifier.on( "error", function( error ) {
 	debug( "invalid hook request", error );
-});
+} );
 
 debug( "listening on port " + config.port );
 
@@ -31,7 +32,7 @@ function prHook( event ) {
 	debug( "processing hook", event.repo, event.pr );
 	getSignatures().then(
 		function( signatures ) {
-			auditPr({
+			auditPr( {
 				repo: event.repo,
 				pr: event.pr,
 				baseRemote: event.payload.pull_request.base.git_url,
@@ -42,12 +43,16 @@ function prHook( event ) {
 				head: event.head,
 				signatures: signatures
 			})
-				.then(function( status ) {
+				.then( function( status ) {
 					if ( status.auditError ) {
 						throw status.auditError;
 					}
+					if ( status.state === "failure" ) {
+						failedEvents.push( event );
+					}
 				})
 				.catch(function( error ) {
+					failedEvents.push( event );
 					logger.error( "Error auditing hook", {
 						repo: event.repo,
 						pr: event.pr,
@@ -73,22 +78,32 @@ function prHook( event ) {
 						error: error.stack
 					});
 				});
+			failedEvents.push( event );
 		}
 	);
 }
 
 // Fetch new CLA signatures periodically
 getSignatures = (function() {
+	var signatures;
 	var promise = getHashedSignatures();
+	promise
+		.then(function( initialSignatures ) {
+			signatures = initialSignatures;
+		});
 
 	function updateSignatures() {
 		var updatedPromise = getHashedSignatures();
 
 		debug( "updating signatures" );
 		updatedPromise
-			.then(function() {
+			.then(function( newSignatures ) {
 				debug( "successfully updated signatures" );
 				promise = updatedPromise;
+				if ( Object.keys( signatures ).length !== Object.keys( newSignatures ).length ) {
+					signatures = newSignatures;
+					failedEvents.splice( 0 ).forEach( prHook );
+				}
 			})
 			.catch(function( error ) {
 				logger.error( "Error getting signatures", error.stack );
