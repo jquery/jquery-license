@@ -20,10 +20,11 @@
     "test": "nodeunit"
   },
   "bin": {
-    "jquery-audit-branch": "./bin/audit.js",
+    "jquery-audit-branch": "./bin/audit-branch.js",
     "jquery-audit-pr": "./bin/audit-pr.js"
   },
   "dependencies": {
+    "async": "1.4.0",
     "debug": "2.1.1",
     "es6-promise": "2.0.1",
     "git-notifier": "2.1.0",
@@ -34,6 +35,7 @@
     "unorm": "1.3.3"
   },
   "devDependencies": {
-    "nodeunit": "0.9.0"
+    "nodeunit": "0.9.0",
+    "sinon": "1.15.4"
   }
 }

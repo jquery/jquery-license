@@ -8,7 +8,8 @@ var getSignatures,
 	Repo = require( "../lib/repo" ),
 	auditPr = require( "../lib/pr" ).audit,
 	getHashedSignatures = require( "../lib/signatures" ).hashed,
-	config = require( "../lib/config" );
+	config = require( "../lib/config" ),
+	async = require( "async" );
 
 var server = http.createServer(),
 	notifier = new Notifier(),
@@ -24,7 +25,10 @@ notifier.on( "error", function( error ) {
 
 debug( "listening on port " + config.port );
 
-function prHook( event ) {
+function prHook( event, done ) {
+	if ( !done ) {
+		done = function() {};
+	}
 	if ( event.payload.action !== "opened" && event.payload.action !== "synchronize" ) {
 		return;
 	}
@@ -50,6 +54,7 @@ function prHook( event ) {
 					if ( status.state === "failure" ) {
 						failedEvents.push( event );
 					}
+					done();
 				})
 				.catch(function( error ) {
 					failedEvents.push( event );
@@ -59,6 +64,7 @@ function prHook( event ) {
 						head: event.head,
 						error: error.stack
 					});
+					done();
 				});
 		},
 
@@ -77,8 +83,10 @@ function prHook( event ) {
 						head: event.head,
 						error: error.stack
 					});
+					done();
 				});
 			failedEvents.push( event );
+			done();
 		}
 	);
 }
@@ -102,7 +110,7 @@ getSignatures = (function() {
 				promise = updatedPromise;
 				if ( Object.keys( signatures ).length !== Object.keys( newSignatures ).length ) {
 					signatures = newSignatures;
-					failedEvents.splice( 0 ).forEach( prHook );
+					async.eachSeries( failedEvents.splice( 0 ), prHook );
 				}
 			})
 			.catch(function( error ) {
