@@ -76,6 +76,10 @@ function prHook( event, done ) {
 				state: "error",
 				description: "There was an error checking the CLA status"
 			})
+				.then(function() {
+					failedEvents.push( event );
+					done();
+				})
 				.catch(function( error ) {
 					logger.error( "Error setting status", {
 						repo: event.repo,
@@ -83,10 +87,9 @@ function prHook( event, done ) {
 						head: event.head,
 						error: error.stack
 					});
+					failedEvents.push( event );
 					done();
 				});
-			failedEvents.push( event );
-			done();
 		}
 	);
 }

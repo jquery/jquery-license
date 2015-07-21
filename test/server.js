@@ -20,7 +20,6 @@ exports.get = {
 				if ( event === "error" ) {
 					return;
 				}
-				this.notifierEvent = event;
 				this.notifierCallback = callback;
 			}.bind( this )
 		} );
@@ -67,6 +66,7 @@ exports.get = {
 		} );
 		test.equal( signatures.hashed.callCount, 1 );
 
+		// Promise.resolve is async, wait for signatures to resolve
 		this.setTimeout( function() {
 			test.equal( pr.audit.callCount, 2 );
 
@@ -75,13 +75,16 @@ exports.get = {
 				"new@email.com": "New Name"
 			} ) );
 
+			// Trigger signature refresh timeout
 			this.clock.tick( 1 );
+
+			// Same waiting as above
 			this.setTimeout( function() {
 				test.equal( signatures.hashed.callCount, 2 );
 				test.equal( pr.audit.callCount, 4 );
 
 				test.done();
-			}, 100 );
+			} );
 		}.bind( this ) );
 	}
 };
