@@ -1,6 +1,8 @@
 # jQuery Foundation License Verification
 
-This module audits jQuery Foundation repositories to ensure that all commits have appropriate licensing either via the [CLA](http://contribute.jquery.org/CLA/) or the CAA. This can be run either as a full audit against a given branch of a repository or as a webhook to verify all commits within a pull request.
+This module audits jQuery Foundation repositories to ensure that all commits have appropriate licensing either via the [CLA](http://contribute.jquery.org/CLA/) or the CAA. This can be run either as a full audit against a given branch of a repository or to verify all commits within a pull request. The latter can be done automatically with a webhook.
+
+To manually check a PR, set up a `config.json` with your `githubToken` (next section), then run the audir-pr script (see PR Auditing below).
 
 
 
@@ -13,12 +15,12 @@ The Auditing scripts require some configuration. Create a `config.json` in the r
 * `repoDir` (default: `"repos"`): Which directory to clone repositories into.
 * `outputDir` (default: `"output"`): Which directory to store PR results into.
   * Results for all PR checks are stored, whether run through the web hook or through the `jquery-audit-pr` binary.
+* `githubToken`: A [GitHub access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/) used for setting the commit status. Used for the manual PR audit and webhook.
 
 ### Webhook config
 
 The following properties only apply when running the webhook:
 
-* `githubToken`: A [GitHub access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/) used for setting the commit status.
 * `port` (default: 8000): Which port to listen on.
 * `signatureRefresh` (default: 60,000): How often to fetch new CLA signatures.
 
@@ -76,6 +78,8 @@ jquery-audit-pr <repo> <pr>
 # or
 ./bin/audit-pr.js <repo> <pr>
 ```
+
+Make sure to create a `config.json` with the `githubToken` property (see above).
 
 
 
