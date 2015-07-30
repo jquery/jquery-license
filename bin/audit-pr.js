@@ -7,29 +7,29 @@ var repo, pr,
 // Parse command line arguments
 repo = process.argv[ 2 ];
 pr = process.argv[ 3 ];
-if ( !repo || !pr) {
+if ( !repo || !pr ) {
 	console.error( "Missing repo name or PR #." );
 	console.error( "Usage: jquery-audit-pr <repo> <pr>" );
 	process.exit( 1 );
 }
 
 getSignatures()
-	.then(function( signatures ) {
-		return auditPr({
+	.then( function( signatures ) {
+		return auditPr( {
 			repo: repo,
 			pr: pr,
 			signatures: signatures
-		});
-	})
-	.then(function( status ) {
+		} );
+	} )
+	.then( function( status ) {
 		console.log( status );
 
 		if ( status.auditError ) {
 			console.error( status.auditError.stack );
 		}
-	})
-	.catch(function( error ) {
+	} )
+	.catch( function( error ) {
 		console.error( "Error auditing PR." );
 		console.error( error.stack );
 		process.exit( 1 );
-	});
+	} );

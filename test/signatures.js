@@ -2,6 +2,7 @@ var sinon = require( "sinon" );
 var signatures = require( "../lib/signatures" );
 var caaSignatures = require( "./signatures-caa.json" );
 var claSignatures = require( "./signatures-cla.json" );
+var Promise = require( "es6-promise" ).Promise;
 
 exports.hashed = {
 	setUp: function( done ) {

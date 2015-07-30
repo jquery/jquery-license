@@ -39,10 +39,10 @@ exports.fetch = {
 			return Promise.resolve();
 		};
 
-		this.repo.fetch( providedRef ).then(function() {
+		this.repo.fetch( providedRef ).then( function() {
 			test.ok( "Fetch should resolve" );
 			test.done();
-		});
+		} );
 	},
 
 	"clone errors": function( test ) {
@@ -60,10 +60,10 @@ exports.fetch = {
 			test.ok( false, "Should not fetch on error" );
 		};
 
-		this.repo.fetch( providedRef ).catch(function( error ) {
+		this.repo.fetch( providedRef ).catch( function( error ) {
 			test.strictEqual( error, providedError, "Should pass along error" );
 			test.done();
-		});
+		} );
 	},
 
 	"fetch errors": function( test ) {
@@ -82,10 +82,10 @@ exports.fetch = {
 			return Promise.reject( providedError );
 		};
 
-		this.repo.fetch( providedRef ).catch(function( error ) {
+		this.repo.fetch( providedRef ).catch( function( error ) {
 			test.strictEqual( error, providedError, "Should pass along error" );
 			test.done();
-		});
+		} );
 	},
 
 	"fetch succeeds after previous clone succeeds": function( test ) {
@@ -104,10 +104,10 @@ exports.fetch = {
 			return Promise.resolve();
 		};
 
-		this.repo.fetch( providedRef ).then(function() {
+		this.repo.fetch( providedRef ).then( function() {
 			test.ok( "Fetch should resolve" );
 			test.done();
-		});
+		} );
 	},
 
 	"fetch errors after previous clone succeeds": function( test ) {
@@ -127,10 +127,10 @@ exports.fetch = {
 			return Promise.reject( providedError );
 		};
 
-		this.repo.fetch( providedRef ).catch(function( error ) {
+		this.repo.fetch( providedRef ).catch( function( error ) {
 			test.strictEqual( error, providedError, "Should pass along error" );
 			test.done();
-		});
+		} );
 	},
 
 	"fetch after previous clone failed": function( test ) {
@@ -149,10 +149,10 @@ exports.fetch = {
 			test.ok( false, "Should not fetch after clone error" );
 		};
 
-		this.repo.fetch( providedRef ).catch(function( error ) {
+		this.repo.fetch( providedRef ).catch( function( error ) {
 			test.strictEqual( error, providedError, "Should pass along error" );
 			test.done();
-		});
+		} );
 	}
 };
 
@@ -175,10 +175,10 @@ exports.clone = {
 			return Promise.resolve();
 		};
 
-		this.repo.clone().then(function() {
+		this.repo.clone().then( function() {
 			test.ok( true, "Clone should resolve" );
 			test.done();
-		});
+		} );
 	},
 
 	"repo exists": function( test ) {
@@ -193,10 +193,10 @@ exports.clone = {
 			test.ok( false, "Should not clone existing repo" );
 		};
 
-		this.repo.clone().then(function() {
+		this.repo.clone().then( function() {
 			test.ok( true, "Clone should resolve" );
 			test.done();
-		});
+		} );
 	},
 
 	"error in exists": function( test ) {
@@ -213,10 +213,10 @@ exports.clone = {
 			test.ok( false, "Should not clone on error" );
 		};
 
-		this.repo.clone().catch(function( error ) {
+		this.repo.clone().catch( function( error ) {
 			test.strictEqual( error, providedError, "Should pass along error" );
 			test.done();
-		});
+		} );
 	},
 
 	"error in _clone": function( test ) {
@@ -234,10 +234,10 @@ exports.clone = {
 			return Promise.reject( providedError );
 		};
 
-		this.repo.clone().catch(function( error ) {
+		this.repo.clone().catch( function( error ) {
 			test.strictEqual( error, providedError, "Should pass along error" );
 			test.done();
-		});
+		} );
 	}
 };
 
@@ -262,10 +262,10 @@ exports.exists = {
 			callback( error );
 		};
 
-		this.repo.exists().then(function( exists ) {
+		this.repo.exists().then( function( exists ) {
 			test.ok( !exists, "Repo should not exist" );
 			test.done();
-		});
+		} );
 	},
 
 	"repo exists": function( test ) {
@@ -279,10 +279,10 @@ exports.exists = {
 			callback( null, {} );
 		};
 
-		this.repo.exists().then(function( exists ) {
+		this.repo.exists().then( function( exists ) {
 			test.ok( exists, "Repo should exist" );
 			test.done();
-		});
+		} );
 	},
 
 	"stat error": function( test ) {
@@ -297,10 +297,10 @@ exports.exists = {
 			callback( providedError );
 		};
 
-		this.repo.exists().catch(function( error ) {
+		this.repo.exists().catch( function( error ) {
 			test.strictEqual( error, providedError, "Should pass along error" );
 			test.done();
-		});
+		} );
 	},
 
 	tearDown: function( done ) {
@@ -345,10 +345,10 @@ exports.auditBranch = {
 			return Promise.resolve( providedResult );
 		};
 
-		this.repo.auditBranch( providedOptions ).then(function( result ) {
+		this.repo.auditBranch( providedOptions ).then( function( result ) {
 			test.strictEqual( result, providedResult, "Should resolve to provided result" );
 			test.done();
-		});
+		} );
 	},
 
 	"error in fetch": function( test ) {
@@ -368,10 +368,10 @@ exports.auditBranch = {
 			test.ok( false, "Should not audit on error" );
 		};
 
-		this.repo.auditBranch( providedOptions ).catch(function( error ) {
+		this.repo.auditBranch( providedOptions ).catch( function( error ) {
 			test.strictEqual( error, providedError, "Should pass along error" );
 			test.done();
-		});
+		} );
 	},
 
 	"error in audit": function( test ) {
@@ -388,10 +388,10 @@ exports.auditBranch = {
 			return Promise.reject( providedError );
 		};
 
-		this.repo.auditBranch( providedOptions ).catch(function( error ) {
+		this.repo.auditBranch( providedOptions ).catch( function( error ) {
 			test.strictEqual( error, providedError, "Should pass along error" );
 			test.done();
-		});
+		} );
 	}
 };
 
@@ -417,7 +417,7 @@ exports.auditPr = {
 		test.expect( 8 );
 
 		var providedOptions = this.options,
-			providedCommittish = this.committish;
+			providedCommittish = this.committish,
 			providedResult = this.result,
 			expectedFetches = [
 				{
@@ -451,10 +451,10 @@ exports.auditPr = {
 			return Promise.resolve( providedResult );
 		};
 
-		this.repo.auditPr( providedOptions ).then(function( result ) {
+		this.repo.auditPr( providedOptions ).then( function( result ) {
 			test.strictEqual( result, providedResult, "Should resolve to provided result" );
 			test.done();
-		});
+		} );
 	},
 
 	"error in fetch": function( test ) {
@@ -471,10 +471,10 @@ exports.auditPr = {
 			test.ok( false, "Should not audit on error" );
 		};
 
-		this.repo.auditPr( providedOptions ).catch(function( error ) {
+		this.repo.auditPr( providedOptions ).catch( function( error ) {
 			test.strictEqual( error, providedError, "Should pass along error" );
 			test.done();
-		});
+		} );
 	},
 
 	"error in audit": function( test ) {
@@ -491,9 +491,9 @@ exports.auditPr = {
 			return Promise.reject( providedError );
 		};
 
-		this.repo.auditPr( providedOptions ).catch(function( error ) {
+		this.repo.auditPr( providedOptions ).catch( function( error ) {
 			test.strictEqual( error, providedError, "Should pass along error" );
 			test.done();
-		});
+		} );
 	}
 };

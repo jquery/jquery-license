@@ -4,7 +4,8 @@ var sinon = require( "sinon" ),
 	Repo = require( "../lib/repo" ),
 	pr = require( "../lib/pr" ),
 	signatures = require( "../lib/signatures" ),
-	config = require( "../lib/config" );
+	config = require( "../lib/config" ),
+	Promise = require( "es6-promise" ).Promise;
 
 exports.get = {
 	setUp: function( done ) {

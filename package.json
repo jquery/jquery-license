@@ -17,7 +17,7 @@
   ],
   "scripts": {
     "start": "./bin/server.js",
-    "test": "nodeunit"
+    "test": "jshint *.js **/*.js && jscs *.js **/*.js && nodeunit"
   },
   "bin": {
     "jquery-audit-branch": "./bin/audit-branch.js",
@@ -35,6 +35,8 @@
     "unorm": "1.3.3"
   },
   "devDependencies": {
+    "jscs": "2.0.0",
+    "jshint": "2.8.0",
     "nodeunit": "0.9.0",
     "sinon": "1.15.4"
   }

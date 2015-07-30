@@ -46,7 +46,7 @@ function prHook( event, done ) {
 				headBranch: event.payload.pull_request.head.ref,
 				head: event.head,
 				signatures: signatures
-			})
+			} )
 				.then( function( status ) {
 					if ( status.auditError ) {
 						throw status.auditError;
@@ -55,74 +55,74 @@ function prHook( event, done ) {
 						failedEvents.push( event );
 					}
 					done();
-				})
-				.catch(function( error ) {
+				} )
+				.catch( function( error ) {
 					failedEvents.push( event );
 					logger.error( "Error auditing hook", {
 						repo: event.repo,
 						pr: event.pr,
 						head: event.head,
 						error: error.stack
-					});
+					} );
 					done();
-				});
+				} );
 		},
 
 		// If we can't get the signatures, set the status to error
 		function() {
 			var repo = Repo.get( event.repo );
-			repo.setStatus({
+			repo.setStatus( {
 				sha: event.head,
 				state: "error",
 				description: "There was an error checking the CLA status"
-			})
-				.then(function() {
+			} )
+				.then( function() {
 					failedEvents.push( event );
 					done();
-				})
-				.catch(function( error ) {
+				} )
+				.catch( function( error ) {
 					logger.error( "Error setting status", {
 						repo: event.repo,
 						pr: event.pr,
 						head: event.head,
 						error: error.stack
-					});
+					} );
 					failedEvents.push( event );
 					done();
-				});
+				} );
 		}
 	);
 }
 
 // Fetch new CLA signatures periodically
-getSignatures = (function() {
+getSignatures = ( function() {
 	var signatures;
 	var promise = getHashedSignatures();
 	promise
-		.then(function( initialSignatures ) {
+		.then( function( initialSignatures ) {
 			signatures = initialSignatures;
-		});
+		} );
 
 	function updateSignatures() {
 		var updatedPromise = getHashedSignatures();
 
 		debug( "updating signatures" );
 		updatedPromise
-			.then(function( newSignatures ) {
+			.then( function( newSignatures ) {
 				debug( "successfully updated signatures" );
 				promise = updatedPromise;
 				if ( Object.keys( signatures ).length !== Object.keys( newSignatures ).length ) {
 					signatures = newSignatures;
 					async.eachSeries( failedEvents.splice( 0 ), prHook );
 				}
-			})
-			.catch(function( error ) {
+			} )
+			.catch( function( error ) {
 				logger.error( "Error getting signatures", error.stack );
 				debug( "error updating signatures", error );
-			})
-			.then(function() {
+			} )
+			.then( function() {
 				setTimeout( updateSignatures, config.signatureRefresh );
-			});
+			} );
 	}
 
 	setTimeout( updateSignatures, config.signatureRefresh );
@@ -130,4 +130,4 @@ getSignatures = (function() {
 	return function() {
 		return promise;
 	};
-})();
+} )();

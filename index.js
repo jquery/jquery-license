@@ -3,12 +3,12 @@ var Repo = require( "./lib/repo" ),
 	exceptions = require( "./lib/exceptions" );
 
 module.exports = function( options ) {
-	return getSignatures().then(function( signatures ) {
+	return getSignatures().then( function( signatures ) {
 		var repo = Repo.get( options.repo );
-		return repo.auditBranch({
+		return repo.auditBranch( {
 			branch: options.branch || "master",
 			signatures: signatures,
 			exceptions: exceptions[ options.repo ]
-		});
-	});
+		} );
+	} );
 };
