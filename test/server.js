@@ -31,7 +31,10 @@ exports.get = {
 			state: "failure"
 		} ) );
 		this.sandbox.stub( signatures, "hashed" ).returns( Promise.resolve( {
-			"name@email.com": "Firstname Lastname"
+			"name@email.com": {
+				names: [ "Firstname Lastname" ],
+				errors: []
+			}
 		} ) );
 		config.owner = "testuser";
 		config.port = 8888;
@@ -72,8 +75,14 @@ exports.get = {
 			test.equal( pr.audit.callCount, 2 );
 
 			signatures.hashed.returns( Promise.resolve( {
-				"name@email.com": "Firstname Lastname",
-				"new@email.com": "New Name"
+				"name@email.com": {
+					names: [ "Firstname Lastname" ],
+					errors: []
+				},
+				"new@email.com": {
+					names: [ "New Name" ],
+					errors: []
+				}
 			} ) );
 
 			// Trigger signature refresh timeout

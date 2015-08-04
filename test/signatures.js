@@ -22,13 +22,36 @@ exports.hashed = {
 		signatures.hashed()
 			.then( function( result ) {
 				test.deepEqual( result, {
-					"github@pan.com": "Peter Pan",
-					"code@pan.com": "Peter Pan",
-					"alice@wonderland.eu": "Alice Wonderland",
-					"bobbelcher@gmail.com": "Bob Belcher",
-					"scott.gonzalez@gmail.com": "Scott González",
-					"arschmitz@gmail.com": "Alexander Schmitz",
-					"joern.zaefferer@gmail.com": "Jörn Zaefferer"
+					"github@pan.com": { names: [ "Peter Pan" ], errors: [] },
+					"code@pan.com": { names: [ "Peter Pan" ], errors: [] },
+					"alice@wonderland.eu": {
+						names: [
+							"Alice Wonderland",
+							"Alice Mallory Wonderland",
+							"Alice M. Wonderland"
+						],
+						errors: []
+					},
+					"bobbelcher@gmail.com": { names: [ "Bob Belcher" ], errors: [] },
+					"jaronnoraj@gmail.com": {
+						names: [ "Jaron Noraj" ],
+						errors: [ "jaronnoraj@gmail.com did not properly confirm agreement." ]
+					},
+					"jaronnorajgmail.com": {
+						names: [ "Jaron Noraj" ],
+						errors: [ "jaronnorajgmail.com is not a valid email address." ]
+					},
+					"jaron@noreply.github.com": {
+						names: [ "Jaron Noraj" ],
+						errors: [ "jaron@noreply.github.com is a private GitHub email address." ]
+					},
+					"jaronnoraj@email.com": {
+						names: [ "JaronNoraj" ],
+						errors: [ "Suspicious name: JaronNoraj" ]
+					},
+					"scott.gonzalez@gmail.com": { names: [ "Scott González" ], errors: [] },
+					"arschmitz@gmail.com": { names: [ "Alexander Schmitz" ], errors: [] },
+					"joern.zaefferer@gmail.com": { names: [ "Jörn Zaefferer" ], errors: [] }
 				} );
 				test.done();
 			} )

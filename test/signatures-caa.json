@@ -1,35 +1,5 @@
 [
 	{
-		"id": {
-			"$t": "https://spreadsheets.google.com/feeds/list/xyz123/1/public/values/1"
-		},
-		"updated": {
-			"$t": "2015-03-18T17:22:33.363Z"
-		},
-		"category": [
-			{
-				"scheme": "http://schemas.google.com/spreadsheets/2006",
-				"term": "http://schemas.google.com/spreadsheets/2006#list"
-			}
-		],
-		"title": {
-			"type": "text",
-			"$t": "7/11/2013 13:55:53"
-		},
-		"content": {
-			"type": "text",
-			"$t": "fullname: Scott González, emailaddress: scott.gonzalez@gmail.com, confirmation: I AGREE"
-		},
-		"link": [
-			{
-				"rel": "self",
-				"type": "application/atom+xml",
-				"href": "http://spreadsheets.google.com/feeds/list/xyz123/1/public/values/1"
-			}
-		],
-		"gsx$timestamp": {
-			"$t": "7/11/2013 13:55:53"
-		},
 		"gsx$fullname": {
 			"$t": "Scott González"
 		},
@@ -41,36 +11,6 @@
 		}
 	},
 	{
-		"id": {
-			"$t": "https://spreadsheets.google.com/feeds/list/xyz123/1/public/values/2"
-		},
-		"updated": {
-			"$t": "2015-03-18T17:22:33.363Z"
-		},
-		"category": [
-			{
-				"scheme": "http://schemas.google.com/spreadsheets/2006",
-				"term": "http://schemas.google.com/spreadsheets/2006#list"
-			}
-		],
-		"title": {
-			"type": "text",
-			"$t": "7/11/2013 15:36:17"
-		},
-		"content": {
-			"type": "text",
-			"$t": "fullname: Alexander Schmitz, emailaddress: arschmitz@gmail.com, confirmation: I AGREE"
-		},
-		"link": [
-			{
-				"rel": "self",
-				"type": "application/atom+xml",
-				"href": "http://spreadsheets.google.com/feeds/list/xyz123/1/public/values/2"
-			}
-		],
-		"gsx$timestamp": {
-			"$t": "7/11/2013 15:36:17"
-		},
 		"gsx$fullname": {
 			"$t": "Alexander Schmitz"
 		},
@@ -82,36 +22,6 @@
 		}
 	},
 	{
-		"id": {
-			"$t": "https://spreadsheets.google.com/feeds/list/xyz123/1/public/values/3"
-		},
-		"updated": {
-			"$t": "2015-03-19T17:22:33.363Z"
-		},
-		"category": [
-			{
-				"scheme": "http://schemas.google.com/spreadsheets/2006",
-				"term": "http://schemas.google.com/spreadsheets/2006#list"
-			}
-		],
-		"title": {
-			"type": "text",
-			"$t": "7/11/2013 15:36:17"
-		},
-		"content": {
-			"type": "text",
-			"$t": "fullname: Jörn Zaefferer, emailaddress: joern.zaefferer@gmail.com, confirmation: I AGREE"
-		},
-		"link": [
-			{
-				"rel": "self",
-				"type": "application/atom+xml",
-				"href": "http://spreadsheets.google.com/feeds/list/xyz123/1/public/values/3"
-			}
-		],
-		"gsx$timestamp": {
-			"$t": "8/11/2013 15:36:17"
-		},
 		"gsx$fullname": {
 			"$t": "Jörn Zaefferer"
 		},
