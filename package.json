@@ -17,7 +17,7 @@
   ],
   "scripts": {
     "start": "./bin/server.js",
-    "test": "jshint *.js **/*.js && jscs *.js **/*.js && nodeunit"
+    "test": "jshint {.,bin,lib,lib/repo,test}/*.js && jscs {.,bin,lib,lib/repo,test}/*.js && nodeunit"
   },
   "bin": {
     "jquery-audit-branch": "./bin/audit-branch.js",
