@@ -37,6 +37,7 @@ function prHook( event, done ) {
 	getSignatures().then(
 		function( signatures ) {
 			auditPr( {
+				action: event.payload.action,
 				repo: event.repo,
 				pr: event.pr,
 				baseRemote: event.payload.pull_request.base.git_url,
@@ -113,7 +114,12 @@ getSignatures = ( function() {
 				promise = updatedPromise;
 				if ( Object.keys( signatures ).length !== Object.keys( newSignatures ).length ) {
 					signatures = newSignatures;
-					async.eachSeries( failedEvents.splice( 0 ), prHook );
+					async.eachSeries( failedEvents.splice( 0 ), function( event, done ) {
+
+						// Overide action to avoid posting comments twice
+						event.payload.action = "synchronize";
+						prHook( event, done );
+					} );
 				}
 			} )
 			.catch( function( error ) {
