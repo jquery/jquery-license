@@ -99,10 +99,10 @@
 	},
 	{
 		"gsx$fullname": {
-			"$t": "Jaron Noraj"
+			"$t": "No Agree"
 		},
 		"gsx$emailaddress": {
-			"$t": "jaronnoraj@gmail.com"
+			"$t": "noagree@gmail.com"
 		},
 		"gsx$confirmation": {
 			"$t": "I DON'T AGREE"
@@ -113,10 +113,10 @@
 	},
 	{
 		"gsx$fullname": {
-			"$t": "Jaron Noraj"
+			"$t": "Invalid Email"
 		},
 		"gsx$emailaddress": {
-			"$t": "jaronnorajgmail.com"
+			"$t": "invalidemail.com"
 		},
 		"gsx$confirmation": {
 			"$t": "I AGREE"
@@ -127,10 +127,10 @@
 	},
 	{
 		"gsx$fullname": {
-			"$t": "Jaron Noraj"
+			"$t": "Invalid Host"
 		},
 		"gsx$emailaddress": {
-			"$t": "jaron@noreply.github.com"
+			"$t": "invalidhost@noreply.github.com"
 		},
 		"gsx$confirmation": {
 			"$t": "I AGREE"
@@ -141,10 +141,66 @@
 	},
 	{
 		"gsx$fullname": {
-			"$t": "JaronNoraj"
+			"$t": "InvalidName"
 		},
 		"gsx$emailaddress": {
-			"$t": "jaronnoraj@email.com"
+			"$t": "invalidname@email.com"
+		},
+		"gsx$confirmation": {
+			"$t": "I AGREE"
+		},
+		"gsx$nameconfirmation": {
+			"$t": ""
+		}
+	},
+	{
+		"gsx$fullname": {
+			"$t": "Double Signature"
+		},
+		"gsx$emailaddress": {
+			"$t": "doublesignature@email.com"
+		},
+		"gsx$confirmation": {
+			"$t": "I AGREE"
+		},
+		"gsx$nameconfirmation": {
+			"$t": ""
+		}
+	},
+	{
+		"gsx$fullname": {
+			"$t": "DoubleSignature"
+		},
+		"gsx$emailaddress": {
+			"$t": "doublesignature@email.com"
+		},
+		"gsx$confirmation": {
+			"$t": "I AGREE"
+		},
+		"gsx$nameconfirmation": {
+			"$t": ""
+		}
+	},
+	{
+		"gsx$fullname": {
+			"$t": "ReverseDouble"
+		},
+		"gsx$emailaddress": {
+			"$t": "reversedouble@email.com"
+		},
+		"gsx$confirmation": {
+			"$t": "I AGREE"
+		},
+		"gsx$nameconfirmation": {
+			"$t": ""
+		}
+	},
+	{
+		"gsx$fullname": {
+			"$t": "Reverse Double"
+		},
+		"gsx$emailaddress": {
+			"$t": "reversedouble@email.com"
 		},
 		"gsx$confirmation": {
 			"$t": "I AGREE"

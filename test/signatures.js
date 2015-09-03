@@ -33,22 +33,25 @@ exports.hashed = {
 						errors: []
 					},
 					"bobbelcher@gmail.com": { names: [ "Bob Belcher" ], errors: [] },
-					"jaronnoraj@gmail.com": {
-						names: [ "Jaron Noraj" ],
-						errors: [ "jaronnoraj@gmail.com did not properly confirm agreement." ]
+					"noagree@gmail.com": {
+						names: [ "No Agree" ],
+						errors: [ "noagree@gmail.com did not properly confirm agreement." ]
 					},
-					"jaronnorajgmail.com": {
-						names: [ "Jaron Noraj" ],
-						errors: [ "jaronnorajgmail.com is not a valid email address." ]
+					"invalidemail.com": {
+						names: [ "Invalid Email" ],
+						errors: [ "invalidemail.com is not a valid email address." ]
 					},
-					"jaron@noreply.github.com": {
-						names: [ "Jaron Noraj" ],
-						errors: [ "jaron@noreply.github.com is a private GitHub email address." ]
+					"invalidhost@noreply.github.com": {
+						names: [ "Invalid Host" ],
+						errors: [ "invalidhost@noreply.github.com is a private GitHub email" +
+							" address." ]
 					},
-					"jaronnoraj@email.com": {
-						names: [ "JaronNoraj" ],
-						errors: [ "Suspicious name: JaronNoraj" ]
+					"invalidname@email.com": {
+						names: [ "InvalidName" ],
+						errors: [ "Suspicious name: InvalidName" ]
 					},
+					"doublesignature@email.com": { names: [ "Double Signature" ], errors: [] },
+					"reversedouble@email.com": { names: [ "Reverse Double" ], errors: [] },
 					"scott.gonzalez@gmail.com": { names: [ "Scott González" ], errors: [] },
 					"arschmitz@gmail.com": { names: [ "Alexander Schmitz" ], errors: [] },
 					"joern.zaefferer@gmail.com": { names: [ "Jörn Zaefferer" ], errors: [] }
