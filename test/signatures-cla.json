@@ -8,9 +8,6 @@
 		},
 		"gsx$confirmation": {
 			"$t": "I AGREE"
-		},
-		"gsx$nameconfirmation": {
-			"$t": ""
 		}
 	},
 	{
@@ -22,9 +19,6 @@
 		},
 		"gsx$confirmation": {
 			"$t": "I AGREE"
-		},
-		"gsx$nameconfirmation": {
-			"$t": ""
 		}
 	},
 	{
@@ -36,9 +30,6 @@
 		},
 		"gsx$confirmation": {
 			"$t": "I AGREE"
-		},
-		"gsx$nameconfirmation": {
-			"$t": ""
 		}
 	},
 	{
@@ -50,9 +41,6 @@
 		},
 		"gsx$confirmation": {
 			"$t": "I AGREE"
-		},
-		"gsx$nameconfirmation": {
-			"$t": ""
 		}
 	},
 	{
@@ -64,9 +52,6 @@
 		},
 		"gsx$confirmation": {
 			"$t": "I AGREE"
-		},
-		"gsx$nameconfirmation": {
-			"$t": ""
 		}
 	},
 	{
@@ -78,9 +63,6 @@
 		},
 		"gsx$confirmation": {
 			"$t": "I AGREE"
-		},
-		"gsx$nameconfirmation": {
-			"$t": ""
 		}
 	},
 	{
@@ -92,9 +74,6 @@
 		},
 		"gsx$confirmation": {
 			"$t": "I AGREE"
-		},
-		"gsx$nameconfirmation": {
-			"$t": ""
 		}
 	},
 	{
@@ -106,9 +85,6 @@
 		},
 		"gsx$confirmation": {
 			"$t": "I DON'T AGREE"
-		},
-		"gsx$nameconfirmation": {
-			"$t": ""
 		}
 	},
 	{
@@ -120,9 +96,6 @@
 		},
 		"gsx$confirmation": {
 			"$t": "I AGREE"
-		},
-		"gsx$nameconfirmation": {
-			"$t": ""
 		}
 	},
 	{
@@ -134,23 +107,17 @@
 		},
 		"gsx$confirmation": {
 			"$t": "I AGREE"
-		},
-		"gsx$nameconfirmation": {
-			"$t": ""
 		}
 	},
 	{
 		"gsx$fullname": {
-			"$t": "InvalidName"
+			"$t": "OneName"
 		},
 		"gsx$emailaddress": {
-			"$t": "invalidname@email.com"
+			"$t": "onename@email.com"
 		},
 		"gsx$confirmation": {
 			"$t": "I AGREE"
-		},
-		"gsx$nameconfirmation": {
-			"$t": ""
 		}
 	},
 	{
@@ -162,37 +129,17 @@
 		},
 		"gsx$confirmation": {
 			"$t": "I AGREE"
-		},
-		"gsx$nameconfirmation": {
-			"$t": ""
 		}
 	},
 	{
 		"gsx$fullname": {
-			"$t": "DoubleSignature"
+			"$t": "Double Signature"
 		},
 		"gsx$emailaddress": {
 			"$t": "doublesignature@email.com"
 		},
 		"gsx$confirmation": {
 			"$t": "I AGREE"
-		},
-		"gsx$nameconfirmation": {
-			"$t": ""
-		}
-	},
-	{
-		"gsx$fullname": {
-			"$t": "ReverseDouble"
-		},
-		"gsx$emailaddress": {
-			"$t": "reversedouble@email.com"
-		},
-		"gsx$confirmation": {
-			"$t": "I AGREE"
-		},
-		"gsx$nameconfirmation": {
-			"$t": ""
 		}
 	},
 	{
@@ -204,9 +151,17 @@
 		},
 		"gsx$confirmation": {
 			"$t": "I AGREE"
+		}
+	},
+	{
+		"gsx$fullname": {
+			"$t": "Reverse Double"
 		},
-		"gsx$nameconfirmation": {
-			"$t": ""
+		"gsx$emailaddress": {
+			"$t": "reversedouble@email.com"
+		},
+		"gsx$confirmation": {
+			"$t": "I AGREE"
 		}
 	}
 ]
