@@ -46,10 +46,7 @@ exports.hashed = {
 						errors: [ "invalidhost@noreply.github.com is a private GitHub email" +
 							" address." ]
 					},
-					"invalidname@email.com": {
-						names: [ "InvalidName" ],
-						errors: [ "Suspicious name: InvalidName" ]
-					},
+					"onename@email.com": { names: [ "OneName" ], errors: [] },
 					"doublesignature@email.com": { names: [ "Double Signature" ], errors: [] },
 					"reversedouble@email.com": { names: [ "Reverse Double" ], errors: [] },
 					"scott.gonzalez@gmail.com": { names: [ "Scott González" ], errors: [] },
