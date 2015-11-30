@@ -44,11 +44,13 @@ exports.hashed = {
 					"invalidhost@noreply.github.com": {
 						names: [ "Invalid Host" ],
 						errors: [ "invalidhost@noreply.github.com is a private GitHub email" +
-							" address." ]
+							" address, which we can\'t accept since it can\'t be contacted." +
+							" Please update your commit to another email address, " +
+							" and sign again with that address." ]
 					},
 					"invalidname@email.com": {
 						names: [ "InvalidName" ],
-						errors: [ "Suspicious name: InvalidName" ]
+						errors: [ "The name InvalidName requires manual verification." ]
 					},
 					"doublesignature@email.com": { names: [ "Double Signature" ], errors: [] },
 					"reversedouble@email.com": { names: [ "Reverse Double" ], errors: [] },
