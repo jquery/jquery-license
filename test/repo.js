@@ -5,14 +5,16 @@ var fs = require( "fs" ),
 
 exports.get = {
 	"returns singleton": function( test ) {
-		test.expect( 3 );
+		test.expect( 5 );
 
-		var instance1 = Repo.get( "test-repo" ),
-			instance2 = Repo.get( "test-repo" ),
-			instance3 = Repo.get( "test-repo-2" );
+		var instance1 = Repo.get( "testuser", "test-repo" ),
+			instance2 = Repo.get( "testuser", "test-repo" ),
+			instance3 = Repo.get( "testuser-2", "test-repo-2" );
 
 		test.equal( instance1.name, "test-repo", "Instance #1 has correct repo name" );
+		test.equal( instance1.owner, "testuser", "Instance #1 has correct owner name" );
 		test.equal( instance3.name, "test-repo-2", "Instance #3 has correct repo name" );
+		test.equal( instance3.owner, "testuser-2", "Instance #3 has correct owner name" );
 		test.strictEqual( instance1, instance2, "Returns same instance per repo" );
 		test.done();
 	}
@@ -20,7 +22,7 @@ exports.get = {
 
 exports.fetch = {
 	setUp: function( done ) {
-		this.repo = new Repo( "test-repo" );
+		this.repo = new Repo( "testuser", "test-repo" );
 		done();
 	},
 
@@ -158,7 +160,7 @@ exports.fetch = {
 
 exports.clone = {
 	setUp: function( done ) {
-		this.repo = new Repo( "test-repo" );
+		this.repo = new Repo( "testuser", "test-repo" );
 		done();
 	},
 
@@ -245,7 +247,7 @@ exports.exists = {
 	setUp: function( done ) {
 		this._stat = fs.stat;
 
-		this.repo = new Repo( "test-repo" );
+		this.repo = new Repo( "testuser", "test-repo" );
 		done();
 	},
 
@@ -312,7 +314,7 @@ exports.exists = {
 
 exports.auditBranch = {
 	setUp: function( done ) {
-		this.repo = new Repo( "my-test" );
+		this.repo = new Repo( "testuser", "my-test" );
 		this.options = {
 			branch: "my-branch",
 			signatures: {},
@@ -397,7 +399,7 @@ exports.auditBranch = {
 
 exports.auditPr = {
 	setUp: function( done ) {
-		this.repo = new Repo( "my-test" );
+		this.repo = new Repo( "testuser", "my-test" );
 		this.options = {
 			pr: 37,
 			baseBranch: "my-base-branch",

@@ -11,7 +11,8 @@ To manually check a PR, set up a `config.json` with your `githubToken` (next sec
 The Auditing scripts require some configuration. Create a `config.json` in the root of this module with the following properties:
 
 * `owner` (default: `"jquery"`): Which GitHub user/organization to audit.
-  * This only exists for development purposes so that the value can be set to a personal account for testing.
+  When running jquery-license as a webhook server, this property can be specified as an array
+  of strings instead of a single string, to check pull requests against multiple owners/orgs.
 * `repoDir` (default: `"repos"`): Which directory to clone repositories into.
 * `outputDir` (default: `"output"`): Which directory to store PR results into.
   * Results for all PR checks are stored, whether run through the web hook or through the `jquery-audit-pr` binary.
