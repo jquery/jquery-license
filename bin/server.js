@@ -18,7 +18,9 @@ var server = http.createServer(),
 // Create the notifier
 server.on( "request", notifier.handler );
 server.listen( config.port );
-notifier.on( config.owner + "/*/pull_request", prHook );
+[ ].concat( config.owner ).forEach( function( owner ) {
+	notifier.on( owner + "/*/pull_request", prHook );
+} );
 notifier.on( "error", function( error ) {
 	debug( "invalid hook request", error );
 } );
@@ -33,11 +35,12 @@ function prHook( event, done ) {
 		return;
 	}
 
-	debug( "processing hook", event.repo, event.pr );
+	debug( "processing hook", event.owner, event.repo, event.pr );
 	getSignatures().then(
 		function( signatures ) {
 			auditPr( {
 				action: event.payload.action,
+				owner: event.owner,
 				repo: event.repo,
 				pr: event.pr,
 				baseRemote: event.payload.pull_request.base.git_url,
@@ -60,6 +63,7 @@ function prHook( event, done ) {
 				.catch( function( error ) {
 					failedEvents.push( event );
 					logger.error( "Error auditing hook", {
+						owner: event.owner,
 						repo: event.repo,
 						pr: event.pr,
 						head: event.head,
@@ -71,7 +75,7 @@ function prHook( event, done ) {
 
 		// If we can't get the signatures, set the status to error
 		function() {
-			var repo = Repo.get( event.repo );
+			var repo = Repo.get( event.owner, event.repo );
 			repo.setStatus( {
 				sha: event.head,
 				state: "error",
@@ -83,6 +87,7 @@ function prHook( event, done ) {
 				} )
 				.catch( function( error ) {
 					logger.error( "Error setting status", {
+						owner: event.owner,
 						repo: event.repo,
 						pr: event.pr,
 						head: event.head,
