@@ -27,6 +27,18 @@ The following properties only apply when running the webhook:
 
 
 
+## Adding a new org/repository
+
+1. Add the organization name to the `owner` array in `config.json`
+2. Set up the Webhook in the Settings page of the GitHub org or repo:
+   * Payload URL is the URL to the Webhook server run by `bin/server.js`
+   * Content-type should be `application/x-www-form-urlencoded`
+   * Secret is empty
+   * Event types is “Pull request”
+3. Grant jquerybot write access to all the repositories that you want to apply CLA checks to
+
+
+
 ## Debugging
 
 The [debug](https://www.npmjs.org/package/debug) module is used for debug messages. To enable all debugging, run any script with `DEBUG=*`. You may want to exclude the GitHub requests since they're large and noisy; to do so use `DEBUG=*,-github:*`.
