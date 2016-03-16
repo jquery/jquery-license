@@ -103,3 +103,9 @@ While we strive to have proper licensing for all commits, many projects contain 
 **Exceptions should only be used for trivial changes or code that has since been removed from the repository.**
 
 To mark a commit as an exception, add an entry to the appropriate file in the `exceptions` directory. The file name must match the repository name and every SHA listed as an exception must be accompanied by a comment explaining why the commit is viable for exclusion from audits.
+
+
+
+### Manual committer name verification
+
+To manually verify the name of a committer, in the associated CLA spreadsheet, simply enter a comment in the “Name Confirmation” field describing why the name is valid.
