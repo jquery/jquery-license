@@ -141,10 +141,10 @@
 	},
 	{
 		"gsx$fullname": {
-			"$t": "InvalidName"
+			"$t": "Double Signature"
 		},
 		"gsx$emailaddress": {
-			"$t": "invalidname@email.com"
+			"$t": "doublesignature@email.com"
 		},
 		"gsx$confirmation": {
 			"$t": "I AGREE"
@@ -161,7 +161,7 @@
 			"$t": "doublesignature@email.com"
 		},
 		"gsx$confirmation": {
-			"$t": "I AGREE"
+			"$t": "i agree"
 		},
 		"gsx$nameconfirmation": {
 			"$t": ""
@@ -169,27 +169,13 @@
 	},
 	{
 		"gsx$fullname": {
-			"$t": "DoubleSignature"
-		},
-		"gsx$emailaddress": {
-			"$t": "doublesignature@email.com"
-		},
-		"gsx$confirmation": {
-			"$t": "I AGREE"
-		},
-		"gsx$nameconfirmation": {
-			"$t": ""
-		}
-	},
-	{
-		"gsx$fullname": {
-			"$t": "ReverseDouble"
+			"$t": "Reverse Double"
 		},
 		"gsx$emailaddress": {
 			"$t": "reversedouble@email.com"
 		},
 		"gsx$confirmation": {
-			"$t": "I AGREE"
+			"$t": "i agree"
 		},
 		"gsx$nameconfirmation": {
 			"$t": ""
