@@ -48,10 +48,6 @@ exports.hashed = {
 							" Please update your commit to another email address, " +
 							" and sign again with that address." ]
 					},
-					"invalidname@email.com": {
-						names: [ "InvalidName" ],
-						errors: [ "The name InvalidName requires manual verification." ]
-					},
 					"doublesignature@email.com": { names: [ "Double Signature" ], errors: [] },
 					"reversedouble@email.com": { names: [ "Reverse Double" ], errors: [] },
 					"scott.gonzalez@gmail.com": { names: [ "Scott González" ], errors: [] },
