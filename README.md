@@ -1,6 +1,6 @@
-# jQuery Foundation License Verification
+# JS Foundation License Verification
 
-This module audits jQuery Foundation repositories to ensure that all commits have appropriate licensing either via the [CLA](http://contribute.jquery.org/CLA/) or the CAA. This can be run either as a full audit against a given branch of a repository or to verify all commits within a pull request. The latter can be done automatically with a webhook.
+This module audits JS Foundation repositories to ensure that all commits have appropriate licensing either via the [CLA](https://js.foundation/CLA/) or the CAA. This can be run either as a full audit against a given branch of a repository or to verify all commits within a pull request. The latter can be done automatically with a webhook.
 
 To manually check a PR, set up a `config.json` with your `githubToken` (next section), then run the audir-pr script (see PR Auditing below).
 
