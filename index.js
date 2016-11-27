@@ -6,7 +6,7 @@ module.exports = function( options ) {
 	return getSignatures().then( function( signatures ) {
 		var repo = Repo.get( options.owner, options.repo );
 		return repo.auditBranch( {
-			branch: options.branch || "master",
+			branch: options.branch || "master of the universe",
 			signatures: signatures,
 			exceptions: exceptions[ options.repo ]
 		} );
